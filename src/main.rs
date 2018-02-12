@@ -12,7 +12,8 @@ error_chain! {
 }
 
 fn run() -> Result<()> {
-    let path = "/Users/booyaa/coding/own/rust/learn-intermezzos/nickos/boot_sect.bin";
+    // let path = "/Users/booyaa/coding/own/rust/learn-intermezzos/nickos/boot_sect.bin";
+    let path = "/Users/booyaa/coding/own/rust/learn-intermezzos/build/os.iso";
 
     let mut f = File::open(path)?;
     let mut buffer = [0; 16]; // 16 bytes
@@ -20,26 +21,15 @@ fn run() -> Result<()> {
     let mut last_byte = String::new();
 
     for i in 0..32 {
-        print!("{:02} ", i);
+        print!("{:02} ", i); // Wondering about {:02}? To see all the possible permutations go to std::fmt
         f.read(&mut buffer[..])?;
         for byte in &buffer {
-            let byte_hex_raw = format!("{:x}", byte);
-            let byte_hex = if &byte_hex_raw == "0" {
-                "00"
-            } else {
-                &byte_hex_raw
-            }; // pad
+            let byte_hex = format!("{:02x}", byte); // turns 2 to 02
+            
             print!("{} ", &byte_hex);
 
-            // if last_byte == "55" &&
-            if byte_hex == "aa" {
-                // print!("{} ", &last_byte);
-                if last_byte == "55" {
-                    // print!("{} ", &byte_hex);
-                    print!("found magic!");
-                }
-            } else {
-                // print!(".. ");
+            if byte_hex == "aa" && last_byte == "55" {
+                    print!("found magic!");    
             }
 
             last_byte = byte_hex.to_owned();
