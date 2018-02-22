@@ -12,9 +12,7 @@ error_chain! {
 }
 
 fn run() -> Result<()> {
-    // let path = "/Users/booyaa/coding/own/rust/learn-intermezzos/nickos/boot_sect.bin";
-    let path = "/Users/booyaa/coding/own/rust/learn-intermezzos/build/os.iso";
-
+    let path = "../smol_kernel/build/boot_hello.bin";
     let mut f = File::open(path)?;
     let mut buffer = [0; 16]; // 16 bytes
 
